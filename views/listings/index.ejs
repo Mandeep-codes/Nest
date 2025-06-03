@@ -1,0 +1,166 @@
+<% layout("/layouts/boilerplate")%>
+
+<style>
+  #filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .filter {
+    text-align: center;
+    margin: 1rem 0.5rem;
+    opacity: 0.7;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .filter:hover {
+    opacity: 1;
+    cursor: pointer;
+  }
+
+  .filter p {
+    font-size: 0.8rem;
+    margin: 0;
+  }
+
+  .filter.active {
+    opacity: 1;
+    font-weight: bold;
+  }
+
+  .tax-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.3rem 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 1rem;
+    background-color: #fff;
+    font-size: 0.75rem;
+    margin-left: auto;
+    white-space: nowrap;
+    height: 3.2rem;
+  }
+
+  .search-container {
+    margin: 1rem 0;
+    display: flex;
+  }
+
+  .search-container input {
+    flex-grow: 1;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem 0 0 0.25rem;
+  }
+
+  .search-container button {
+    padding: 0.5rem 1rem;
+    background-color: #ff385c;
+    color: white;
+    border: none;
+    border-radius: 0 0.25rem 0.25rem 0;
+  }
+</style>
+
+
+
+<!-- Toggle Button for Filters (visible only on small screens) -->
+<div class="d-md-none text-center mb-3">
+  <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#filtersCollapse" aria-expanded="false" aria-controls="filtersCollapse">
+    Show Filters
+  </button>
+</div>
+
+<!-- Collapsible Filter Section -->
+<div class="collapse d-md-flex" id="filtersCollapse">
+  <div id="filters" class="w-100">
+    <!-- Filters -->
+    <a href="/listings?category=iconic-cities" class="filter <%= currentCategory === 'iconic-cities' ? 'active' : '' %>">
+      <div><i class="fa-solid fa-mountain-city"></i></div>
+      <p>Iconic Cities</p>
+    </a>
+    <a href="/listings?category=trending" class="filter <%= currentCategory === 'trending' ? 'active' : '' %>">
+      <div><i class="fa-solid fa-fire"></i></div>
+      <p>Trending</p>
+    </a>
+    <a href="/listings?category=rooms" class="filter <%= currentCategory === 'rooms' ? 'active' : '' %>">
+      <div><i class="fa-solid fa-bed"></i></div>
+      <p>Rooms</p>
+    </a>
+    <a href="/listings?category=mountains" class="filter <%= currentCategory === 'mountains' ? 'active' : '' %>">
+      <div><i class="fa-solid fa-mountain"></i></div>
+      <p>Mountains</p>
+    </a>
+    <a href="/listings?category=castles" class="filter <%= currentCategory === 'castles' ? 'active' : '' %>">
+      <div><i class="fa-brands fa-fort-awesome"></i></div>
+      <p>Castles</p>
+    </a>
+    <a href="/listings?category=amazing-pools" class="filter <%= currentCategory === 'amazing-pools' ? 'active' : '' %>">
+      <div><i class="fa-solid fa-person-swimming"></i></div>
+      <p>Amazing Pools</p>
+    </a>
+    <a href="/listings?category=camping" class="filter <%= currentCategory === 'camping' ? 'active' : '' %>">
+      <div><i class="fa-solid fa-campground"></i></div>
+      <p>Camping</p>
+    </a>
+    <a href="/listings?category=farms" class="filter <%= currentCategory === 'farms' ? 'active' : '' %>">
+      <div><i class="fa-solid fa-cow"></i></div>
+      <p>Farms</p>
+    </a>
+    <a href="/listings?category=arctic" class="filter <%= currentCategory === 'arctic' ? 'active' : '' %>">
+      <div><i class="fa-regular fa-snowflake"></i></div>
+      <p>Arctic</p>
+    </a>
+    <a href="/listings?category=domes" class="filter <%= currentCategory === 'domes' ? 'active' : '' %>">
+      <div><i class="fa-solid fa-igloo"></i></div>
+      <p>Domes</p>
+    </a>
+    <a href="/listings?category=boats" class="filter <%= currentCategory === 'boats' ? 'active' : '' %>">
+      <div><i class="fa-solid fa-ship"></i></div>
+      <p>Boats</p>
+    </a>
+
+    <!-- Tax Toggle -->
+    <div class="tax-toggle">
+      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+      <label class="form-check-label" for="flexSwitchCheckDefault">Display after Taxes</label>
+    </div>
+  </div>
+</div>
+
+<!-- Listings -->
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+  <% for (let listing of allListings) { %>
+    <a href="/listings/<%=listing._id%>" class="listing-link">
+      <div class="col">
+        <div class="card h-100 listing-card">
+          <img src="<%= listing.image.url %>" class="card-img-top" alt="listing_image" style="height: 20rem;">
+          <div class="card-body">
+            <p class="card-text"><b><%= listing.title %></b><br>
+              ₹ <%= listing.price.toLocaleString("en-IN") %> / night
+              <i class="tax-info"> &nbsp; &nbsp; +18% GST</i>
+            </p>
+          </div>
+        </div>
+      </div>
+    </a>
+  <% } %>
+</div>
+
+<!-- JS for GST Toggle -->
+<script>
+  let taxSwitch = document.getElementById("flexSwitchCheckDefault");
+  taxSwitch.addEventListener("click", () => {
+    let taxInfo = document.getElementsByClassName("tax-info");
+    for (let info of taxInfo) {
+      info.style.display = info.style.display !== "inline" ? "inline" : "none";
+    }
+  });
+</script>
+
+
+
