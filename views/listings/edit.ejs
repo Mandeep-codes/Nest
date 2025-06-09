@@ -1,89 +1,99 @@
 <% layout("/layouts/boilerplate")%>
-<div class="row">
-    <div class="col-8 offset-2">
-        <br>
-        <h3>Edit this Stay</h3>
-    <form action="/listings/<%=listing._id%>?_method=PUT" method="post" novalidate class="needs-validation" enctype="multipart/form-data">
-  <div class="mb-3">
-            <label for="category" class="form-label">Category:</label>
-            <select name="listing[category]" class="form-control" required>
-                <% const categories = [
-                    ['iconic-cities', 'Iconic Cities'],
-                    ['trending', 'Trending'],
-                    ['rooms', 'Rooms'],
-                    ['mountains', 'Mountains'],
-                    ['castles', 'Castles'],
-                    ['amazing-pools', 'Amazing Pools'],
-                    ['camping', 'Camping'],
-                    ['farms', 'Farms'],
-                    ['arctic', 'Arctic'],
-                    ['domes', 'Domes'],
-                    ['boats', 'Boats']
-                ] %>
-                <% categories.forEach(([value, label]) => { %>
-                    <option value="<%= value %>" <%= listing.category === value ? 'selected' : '' %>>
-                        <%= label %>
-                    </option>
-                <% }) %>
-            </select>
-            <div class="invalid-feedback">Please select a category</div>
-        </div>
-        <div class="mb-3">
-            <label for="title" class="form-label">Title:</label>
-            <input name="listing[title]" value="<%=listing.title%>" class="form-control"
-            required>
-            <div class="invalid-feedback">Title should be valid</div>
+<div class="row justify-content-center">
+    <div class="col-lg-8 col-md-10 col-12">
+        <div class="card shadow-sm border-0 mt-4">
+            <div class="card-body p-4 p-md-5">
+                <h3 class="mb-4 fw-bold text-primary">Edit this Stay</h3>
+                <form action="/listings/<%=listing._id%>?_method=PUT" method="post" novalidate class="needs-validation" enctype="multipart/form-data">
+                    
+                    <!-- Category Select Field -->
+                    <div class="mb-4">
+                        <label for="category" class="form-label fw-semibold">Category</label>
+                        <select name="listing[category]" class="form-select py-2" required>
+                            <% const categories = [
+                                ['iconic-cities', 'Iconic Cities'],
+                                ['trending', 'Trending'],
+                                ['rooms', 'Rooms'],
+                                ['mountains', 'Mountains'],
+                                ['castles', 'Castles'],
+                                ['amazing-pools', 'Amazing Pools'],
+                                ['camping', 'Camping'],
+                                ['farms', 'Farms'],
+                                ['arctic', 'Arctic'],
+                                ['domes', 'Domes'],
+                                ['boats', 'Boats']
+                            ] %>
+                            <% categories.forEach(([value, label]) => { %>
+                                <option value="<%= value %>" <%= listing.category === value ? 'selected' : '' %>>
+                                    <%= label %>
+                                </option>
+                            <% }) %>
+                        </select>
+                        <div class="invalid-feedback text-danger mt-1">Please select a category</div>
+                    </div>
 
-        </div> 
-        <div class="mb-3">
-            <label for="description" class="form-label">Description:</label>
-            <textarea name="listing[description]" class="form-control" required><%= listing.description %></textarea>
-            <div class="invalid-feedback">Description should be valid</div>
-            
+                    <!-- Title Field -->
+                    <div class="mb-4">
+                        <label for="title" class="form-label fw-semibold">Title</label>
+                        <input name="listing[title]" value="<%=listing.title%>" class="form-control py-2" required>
+                        <div class="invalid-feedback text-danger mt-1">Please provide a valid title</div>
+                    </div>
 
-        </div>  
-        <div class="mb-3">
-            Original Listing Image: <br>
-            <img src="<%= originalImageUrl %>" alt="Listing Image" class="img-thumbnail" style="max-width: 200px">
+                    <!-- Description Field -->
+                    <div class="mb-4">
+                        <label for="description" class="form-label fw-semibold">Description</label>
+                        <textarea name="listing[description]" class="form-control py-2" rows="4" required><%= listing.description %></textarea>
+                        <div class="invalid-feedback text-danger mt-1">Please provide a valid description</div>
+                    </div>
 
-        </div>
-        
-        
-        <div class="mb-3">
-            <label for="image" class="form-label">Upload New Image:</label>
-            <input type="file" name="image" value="<%= listing.image.url %>" class="form-control" >
-            <div class="invalid-feedback">Image link should be valid</div>
+                    <!-- Current Image Display -->
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold">Current Image</label>
+                        <div class="border p-3 rounded-3 bg-light">
+                            <img src="<%= originalImageUrl %>" alt="Listing Image" class="img-fluid rounded-3" style="max-height: 200px">
+                            <p class="text-muted mt-2 mb-0">Current listing photo</p>
+                        </div>
+                    </div>
 
+                    <!-- New Image Upload -->
+                    <div class="mb-4">
+                        <label for="image" class="form-label fw-semibold">Upload New Image</label>
+                        <input type="file" name="image" class="form-control py-2">
+                        <small class="text-muted">Leave blank to keep current image</small>
+                        <div class="invalid-feedback text-danger mt-1">Please provide a valid image</div>
+                    </div>
 
-        </div>
-        <div class="row">
-            <div class="mb-3 col-md-4">
-            <label for="price" class="form-label">Price:</label>
-            <input name="listing[price]" value="<%=listing.price%>"type="number" class="form-control" required>
-            <div class="invalid-feedback">Price should be valid</div>
+                    <!-- Price & Country Row -->
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-6">
+                            <label for="price" class="form-label fw-semibold">Price</label>
+                            <div class="input-group">
+                                <span class="input-group-text">$</span>
+                                <input name="listing[price]" value="<%=listing.price%>" type="number" class="form-control py-2" required>
+                            </div>
+                            <div class="invalid-feedback text-danger mt-1">Please provide a valid price</div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="country" class="form-label fw-semibold">Country</label>
+                            <input name="listing[country]" value="<%= listing.country %>" class="form-control py-2" required>
+                            <div class="invalid-feedback text-danger mt-1">Please provide a valid country</div>
+                        </div>
+                    </div>
 
+                    <!-- Location Field -->
+                    <div class="mb-4">
+                        <label for="location" class="form-label fw-semibold">Location</label>
+                        <input name="listing[location]" value="<%=listing.location%>" class="form-control py-2" required>
+                        <div class="invalid-feedback text-danger mt-1">Please provide a valid location</div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button class="btn btn-primary px-4 py-2 fw-semibold">Update Listing</button>
+                    </div>
+                </form>
             </div>
-         <div class="mb-3 col-md-8">
-            <label for="country" class="form-label">Country:</label>
-            <input name="listing[country]" value="<%= listing.country %>" class="form-control" required>
-            <div class="invalid-feedback">Countryname should be valid</div>
-
-
-         </div>
-
         </div>
-        
-        <div class="mb-3">
-            <label for="location" class="form-label">Location:</label>
-            <input name="listing[location]" value="<%=listing.location%>"class="form-control" required>
-            <div class="invalid-feedback">Location should be valid</div>
-
-        </div>
-        
-        <button class="btn btn-dark add-btn">Edit</button>
-        <br>
-        <br>
-    </form>
     </div>
 </div>
 <script src="/js/script.js"></script>

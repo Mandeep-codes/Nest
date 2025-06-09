@@ -1,19 +1,186 @@
 <!DOCTYPE html>
+<style>
+  footer {
+    background-color: #f7f7f7;
+    padding: 3rem 2rem 1.5rem;
+    border-top: 1px solid #eaeaea;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+  }
+  
+  .footer-section h5 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 1.2rem;
+    color: #333;
+  }
+  
+  .footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .footer-links li {
+    margin-bottom: 0.8rem;
+  }
+  
+  .footer-links a {
+    color: #555;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  
+  .footer-links a:hover {
+    color: #ff385c;
+  }
+  
+  .footer-socials {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .footer-socials i {
+    font-size: 1.5rem;
+    color: #555;
+    transition: color 0.2s ease, transform 0.2s ease;
+  }
+  
+  .footer-socials i:hover {
+    color: #ff385c;
+    transform: translateY(-2px);
+  }
+  
+  .footer-bottom {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #eaeaea;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .footer-brand {
+    font-weight: 600;
+    color: #333;
+  }
+  
+  .footer-legal {
+    display: flex;
+    gap: 1.5rem;
+  }
+  
+  .footer-legal a {
+    color: #555;
+    text-decoration: none;
+    font-size: 0.9rem;
+  }
+  
+  .newsletter-form {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+  
+  .newsletter-input {
+    padding: 0.6rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    flex-grow: 1;
+  }
+  
+  .newsletter-btn {
+    background-color: #ff385c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 0 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .newsletter-btn:hover {
+    background-color: #e61e4d;
+  }
+  
+  @media (max-width: 768px) {
+    .footer-container {
+      grid-template-columns: 1fr;
+    }
+    
+    .footer-bottom {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+</style>
 
 <footer>
-    <div class="f-info">
-        <div class="f-info-socials">
-            <i class="fa-brands fa-square-facebook"></i>
-            <i class="fa-brands fa-square-instagram"></i>
-            <i class="fa-brands fa-linkedin"></i>
-
-        </div>
-        <div class="f-info-brand">&copy;DwellNest Private Limited
-        </div>
-        <div class="f-info-links">
-            <a href="/privacy">Privacy</a>
-            
-            <a href="/terms">Terms</a>
-        </div>
+  <div class="footer-container">
+    <div class="footer-section">
+      <h5>Explore</h5>
+      <ul class="footer-links">
+        <li><a href="#">Unique stays</a></li>
+        <li><a href="#">Experiences</a></li>
+        <li><a href="#">Destinations</a></li>
+        <li><a href="#">Seasonal deals</a></li>
+      </ul>
     </div>
+    
+    <div class="footer-section">
+      <h5>Hosting</h5>
+      <ul class="footer-links">
+        <li><a href="/listings/new">Try hosting</a></li>
+        <li><a href="#">Hosting resources</a></li>
+        <li><a href="#">Community forum</a></li>
+        <li><a href="#">Safety information</a></li>
+      </ul>
+    </div>
+    
+    <div class="footer-section">
+      <h5>Support</h5>
+      <ul class="footer-links">
+        <li><a href="#">Help Center</a></li>
+        <li><a href="#">Safety information</a></li>
+        <li><a href="#">Cancellation options</a></li>
+        <li><a href="#">Report neighborhood concern</a></li>
+      </ul>
+    </div>
+    
+    <div class="footer-section">
+      <h5>Stay connected</h5>
+      <div class="footer-socials">
+        <a href="#"><i class="fa-brands fa-square-facebook"></i></a>
+        <a href="#"><i class="fa-brands fa-square-instagram"></i></a>
+        <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+        <a href="#"><i class="fa-brands fa-twitter"></i></a>
+      </div>
+      
+      <h5 style="margin-top: 1.5rem;">Newsletter</h5>
+      <form class="newsletter-form">
+        <input type="email" placeholder="Your email" class="newsletter-input">
+        <button type="submit" class="newsletter-btn">→</button>
+      </form>
+    </div>
+  </div>
+  
+  <div class="footer-bottom">
+    <div class="footer-brand">&copy; 2025 Nest Private Limited</div>
+    <div class="footer-legal">
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+      <a href="#">Sitemap</a>
+      <a href="#">Cookies</a>
+    </div>
+  </div>
 </footer>

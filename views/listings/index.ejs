@@ -1,166 +1,318 @@
 <% layout("/layouts/boilerplate")%>
 
 <style>
-  #filters {
+  /* Filter Section */
+  .filter-section {
+    background-color: white;
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
+    margin-bottom: 1.5rem;
+  }
+
+  .filter-dropdown {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+  }
+
+  .filter-dropbtn {
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
-    gap: 1rem;
-  }
-
-  .filter {
-    text-align: center;
-    margin: 1rem 0.5rem;
-    opacity: 0.7;
-    text-decoration: none;
-    color: inherit;
-  }
-
-  .filter:hover {
-    opacity: 1;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    background-color: #f7f7f7;
+    border: 1px solid #e0e0e0;
+    color: #333;
+    font-size: 0.95rem;
     cursor: pointer;
+    transition: all 0.2s ease;
   }
 
-  .filter p {
-    font-size: 0.8rem;
-    margin: 0;
+  .filter-dropbtn:hover {
+    background-color: #f0f0f0;
   }
 
-  .filter.active {
-    opacity: 1;
-    font-weight: bold;
+  .filter-dropbtn i {
+    transition: transform 0.3s ease;
+  }
+
+  .filter-dropbtn.active i {
+    transform: rotate(180deg);
+  }
+
+  .filter-dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    width: 100%;
+    max-height: 300px;
+    overflow-y: auto;
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    margin-top: 0.5rem;
+    border: 1px solid #e0e0e0;
+  }
+
+  .filter-dropdown-content.show {
+    display: block;
+  }
+
+  .filter-option {
+    padding: 0.75rem 1rem;
+    color: #333;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    transition: all 0.2s ease;
+  }
+
+  .filter-option:hover {
+    background-color: #f7f7f7;
+  }
+
+  .filter-option.active {
+    background-color: #ff385c;
+    color: white;
+  }
+
+  .filter-option.active i {
+    color: white;
+  }
+
+  .filter-option i {
+    font-size: 1rem;
+    color: #666;
+  }
+
+  /* Listings Grid */
+  .listings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  .listing-card {
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .listing-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .card-img-top {
+    height: 240px;
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .card-body {
+    padding: 1.25rem;
+  }
+
+  .card-text {
+    font-size: 0.95rem;
+    color: #333;
+  }
+
+  .card-text b {
+    font-size: 1rem;
+    display: block;
+    margin-bottom: 0.25rem;
   }
 
   .tax-toggle {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.3rem 0.8rem;
-    border: 1px solid #ccc;
-    border-radius: 1rem;
-    background-color: #fff;
-    font-size: 0.75rem;
-    margin-left: auto;
-    white-space: nowrap;
-    height: 3.2rem;
+    padding: 0.75rem;
+    border-radius: 8px;
+    background-color: #f7f7f7;
+    border: 1px solid #e0e0e0;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 100%;
   }
 
-  .search-container {
-    margin: 1rem 0;
-    display: flex;
+  .tax-toggle:hover {
+    border-color: #ff385c;
   }
 
-  .search-container input {
-    flex-grow: 1;
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 0.25rem 0 0 0.25rem;
+  .form-check-input {
+    width: 1.2em;
+    height: 1.2em;
+    margin-top: 0;
   }
 
-  .search-container button {
-    padding: 0.5rem 1rem;
-    background-color: #ff385c;
-    color: white;
-    border: none;
-    border-radius: 0 0.25rem 0.25rem 0;
+  @media (min-width: 768px) {
+    .filter-container {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    
+    .filter-dropdown {
+      width: auto;
+      min-width: 200px;
+    }
+    
+    .tax-toggle {
+      margin-top: 0;
+      width: auto;
+      margin-left: auto;
+    }
   }
 </style>
 
-
-
-<!-- Toggle Button for Filters (visible only on small screens) -->
-<div class="d-md-none text-center mb-3">
-  <button class="btn btn-outline-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#filtersCollapse" aria-expanded="false" aria-controls="filtersCollapse">
-    Show Filters
-  </button>
-</div>
-
-<!-- Collapsible Filter Section -->
-<div class="collapse d-md-flex" id="filtersCollapse">
-  <div id="filters" class="w-100">
-    <!-- Filters -->
-    <a href="/listings?category=iconic-cities" class="filter <%= currentCategory === 'iconic-cities' ? 'active' : '' %>">
-      <div><i class="fa-solid fa-mountain-city"></i></div>
-      <p>Iconic Cities</p>
-    </a>
-    <a href="/listings?category=trending" class="filter <%= currentCategory === 'trending' ? 'active' : '' %>">
-      <div><i class="fa-solid fa-fire"></i></div>
-      <p>Trending</p>
-    </a>
-    <a href="/listings?category=rooms" class="filter <%= currentCategory === 'rooms' ? 'active' : '' %>">
-      <div><i class="fa-solid fa-bed"></i></div>
-      <p>Rooms</p>
-    </a>
-    <a href="/listings?category=mountains" class="filter <%= currentCategory === 'mountains' ? 'active' : '' %>">
-      <div><i class="fa-solid fa-mountain"></i></div>
-      <p>Mountains</p>
-    </a>
-    <a href="/listings?category=castles" class="filter <%= currentCategory === 'castles' ? 'active' : '' %>">
-      <div><i class="fa-brands fa-fort-awesome"></i></div>
-      <p>Castles</p>
-    </a>
-    <a href="/listings?category=amazing-pools" class="filter <%= currentCategory === 'amazing-pools' ? 'active' : '' %>">
-      <div><i class="fa-solid fa-person-swimming"></i></div>
-      <p>Amazing Pools</p>
-    </a>
-    <a href="/listings?category=camping" class="filter <%= currentCategory === 'camping' ? 'active' : '' %>">
-      <div><i class="fa-solid fa-campground"></i></div>
-      <p>Camping</p>
-    </a>
-    <a href="/listings?category=farms" class="filter <%= currentCategory === 'farms' ? 'active' : '' %>">
-      <div><i class="fa-solid fa-cow"></i></div>
-      <p>Farms</p>
-    </a>
-    <a href="/listings?category=arctic" class="filter <%= currentCategory === 'arctic' ? 'active' : '' %>">
-      <div><i class="fa-regular fa-snowflake"></i></div>
-      <p>Arctic</p>
-    </a>
-    <a href="/listings?category=domes" class="filter <%= currentCategory === 'domes' ? 'active' : '' %>">
-      <div><i class="fa-solid fa-igloo"></i></div>
-      <p>Domes</p>
-    </a>
-    <a href="/listings?category=boats" class="filter <%= currentCategory === 'boats' ? 'active' : '' %>">
-      <div><i class="fa-solid fa-ship"></i></div>
-      <p>Boats</p>
-    </a>
+<!-- Filter Section -->
+<div class="filter-section">
+  <div class="filter-container">
+    <!-- Category Dropdown -->
+    <div class="filter-dropdown">
+      <button class="filter-dropbtn <%= currentCategory ? 'active' : '' %>" onclick="toggleFilterDropdown()">
+        <span>
+          <% if (currentCategory) { %>
+            <% const categoryNames = {
+              'iconic-cities': 'Iconic Cities',
+              'trending': 'Trending',
+              'rooms': 'Rooms',
+              'mountains': 'Mountains',
+              'castles': 'Castles',
+              'amazing-pools': 'Amazing Pools',
+              'camping': 'Camping',
+              'farms': 'Farms',
+              'arctic': 'Arctic',
+              'domes': 'Domes',
+              'boats': 'Boats'
+            } %>
+            <%= categoryNames[currentCategory] || 'Select Category' %>
+          <% } else { %>
+            Select Category
+          <% } %>
+        </span>
+        <i class="fas fa-chevron-down"></i>
+      </button>
+      <div class="filter-dropdown-content" id="filterDropdown">
+        <a href="/listings" class="filter-option <%= !currentCategory ? 'active' : '' %>">
+          <i class="fas fa-list"></i>
+          <span>All Categories</span>
+        </a>
+        <a href="/listings?category=iconic-cities" class="filter-option <%= currentCategory === 'iconic-cities' ? 'active' : '' %>">
+          <i class="fa-solid fa-mountain-city"></i>
+          <span>Iconic Cities</span>
+        </a>
+        <a href="/listings?category=trending" class="filter-option <%= currentCategory === 'trending' ? 'active' : '' %>">
+          <i class="fa-solid fa-fire"></i>
+          <span>Trending</span>
+        </a>
+        <a href="/listings?category=rooms" class="filter-option <%= currentCategory === 'rooms' ? 'active' : '' %>">
+          <i class="fa-solid fa-bed"></i>
+          <span>Rooms</span>
+        </a>
+        <a href="/listings?category=mountains" class="filter-option <%= currentCategory === 'mountains' ? 'active' : '' %>">
+          <i class="fa-solid fa-mountain"></i>
+          <span>Mountains</span>
+        </a>
+        <a href="/listings?category=castles" class="filter-option <%= currentCategory === 'castles' ? 'active' : '' %>">
+          <i class="fa-brands fa-fort-awesome"></i>
+          <span>Castles</span>
+        </a>
+        <a href="/listings?category=amazing-pools" class="filter-option <%= currentCategory === 'amazing-pools' ? 'active' : '' %>">
+          <i class="fa-solid fa-person-swimming"></i>
+          <span>Pools</span>
+        </a>
+        <a href="/listings?category=camping" class="filter-option <%= currentCategory === 'camping' ? 'active' : '' %>">
+          <i class="fa-solid fa-campground"></i>
+          <span>Camping</span>
+        </a>
+        <a href="/listings?category=farms" class="filter-option <%= currentCategory === 'farms' ? 'active' : '' %>">
+          <i class="fa-solid fa-cow"></i>
+          <span>Farms</span>
+        </a>
+        <a href="/listings?category=arctic" class="filter-option <%= currentCategory === 'arctic' ? 'active' : '' %>">
+          <i class="fa-regular fa-snowflake"></i>
+          <span>Arctic</span>
+        </a>
+        <a href="/listings?category=domes" class="filter-option <%= currentCategory === 'domes' ? 'active' : '' %>">
+          <i class="fa-solid fa-igloo"></i>
+          <span>Domes</span>
+        </a>
+        <a href="/listings?category=boats" class="filter-option <%= currentCategory === 'boats' ? 'active' : '' %>">
+          <i class="fa-solid fa-ship"></i>
+          <span>Boats</span>
+        </a>
+      </div>
+    </div>
 
     <!-- Tax Toggle -->
     <div class="tax-toggle">
       <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-      <label class="form-check-label" for="flexSwitchCheckDefault">Display after Taxes</label>
+      <label class="form-check-label" for="flexSwitchCheckDefault">Display before Taxes</label>
     </div>
   </div>
 </div>
 
-<!-- Listings -->
-<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+<!-- Listings Grid -->
+<div class="listings-grid">
   <% for (let listing of allListings) { %>
     <a href="/listings/<%=listing._id%>" class="listing-link">
-      <div class="col">
-        <div class="card h-100 listing-card">
-          <img src="<%= listing.image.url %>" class="card-img-top" alt="listing_image" style="height: 20rem;">
-          <div class="card-body">
-            <p class="card-text"><b><%= listing.title %></b><br>
-              ₹ <%= listing.price.toLocaleString("en-IN") %> / night
-              <i class="tax-info"> &nbsp; &nbsp; +18% GST</i>
-            </p>
-          </div>
+      <div class="listing-card card">
+        <img src="<%= listing.image.url %>" class="card-img-top" alt="listing_image">
+        <div class="card-body">
+          <p class="card-text">
+            <b><%= listing.title %></b>
+            <span style="display: block; margin-top: 0.5rem;">
+              ₹<%= listing.price.toLocaleString("en-IN") %> <small>/ night</small>
+              <i class="tax-info">+18% GST</i>
+            </span>
+          </p>
         </div>
       </div>
     </a>
   <% } %>
 </div>
 
-<!-- JS for GST Toggle -->
 <script>
+  // Toggle filter dropdown
+  function toggleFilterDropdown() {
+    const dropdown = document.getElementById("filterDropdown");
+    dropdown.classList.toggle("show");
+    document.querySelector(".filter-dropbtn").classList.toggle("active");
+  }
+
+  // Close the dropdown if clicked outside
+  window.onclick = function(event) {
+    if (!event.target.matches('.filter-dropbtn')) {
+      const dropdowns = document.getElementsByClassName("filter-dropdown-content");
+      for (let i = 0; i < dropdowns.length; i++) {
+        const openDropdown = dropdowns[i];
+        if (openDropdown.classList.contains('show')) {
+          openDropdown.classList.remove('show');
+          document.querySelector(".filter-dropbtn").classList.remove("active");
+        }
+      }
+    }
+  }
+
+  // Tax toggle functionality
   let taxSwitch = document.getElementById("flexSwitchCheckDefault");
   taxSwitch.addEventListener("click", () => {
     let taxInfo = document.getElementsByClassName("tax-info");
     for (let info of taxInfo) {
-      info.style.display = info.style.display !== "inline" ? "inline" : "none";
+      info.style.display = info.style.display !== "none" ? "none" : "inline";
     }
   });
 </script>
-
 
 

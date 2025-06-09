@@ -1,80 +1,81 @@
 <% layout("/layouts/boilerplate")%>
-<div class="row">
-    <div class="col-8 offset-2">
-        <br>
-        <h3>Create a New Stay</h3>
-    <form action="/listings" method="post" novalidate class="needs-validation" enctype="multipart/form-data">
+<div class="row justify-content-center">
+    <div class="col-lg-8 col-md-10 col-12">
+        <div class="card shadow-sm border-0 mt-4">
+            <div class="card-body p-4 p-md-5">
+                <h3 class="mb-4 fw-bold text-primary">Create a New Stay</h3>
+                <form action="/listings" method="post" novalidate class="needs-validation" enctype="multipart/form-data">
+                    <!-- Category Select Field -->
+                    <div class="mb-4">
+                        <label for="category" class="form-label fw-semibold">Category</label>
+                        <select name="listing[category]" class="form-select py-2" required>
+                            <option value="" disabled selected>Select a category</option>
+                            <option value="iconic-cities">Iconic Cities</option>
+                            <option value="trending">Trending</option>
+                            <option value="rooms">Rooms</option>
+                            <option value="mountains">Mountains</option>
+                            <option value="castles">Castles</option>
+                            <option value="amazing-pools">Amazing Pools</option>
+                            <option value="camping">Camping</option>
+                            <option value="farms">Farms</option>
+                            <option value="arctic">Arctic</option>
+                            <option value="domes">Domes</option>
+                            <option value="boats">Boats</option>
+                        </select>
+                        <div class="invalid-feedback text-danger mt-1">Please select a category</div>
+                    </div>
 
-<% layout("/layouts/boilerplate")%>
-<div class="row">
-    <div class="col-8 offset-2">
-        <br>
-        <h3>Create a New Stay</h3>
-    <form action="/listings" method="post" novalidate class="needs-validation" enctype="multipart/form-data">
-        <!-- Add this new category select field right after the opening form tag -->
-        <div class="mb-3">
-            <label for="category" class="form-label">Category:</label>
-            <select name="listing[category]" class="form-control" required>
-                <option value="">Select a category</option>
-                <option value="iconic-cities">Iconic Cities</option>
-                <option value="trending">Trending</option>
-                <option value="rooms">Rooms</option>
-                <option value="mountains">Mountains</option>
-                <option value="castles">Castles</option>
-                <option value="amazing-pools">Amazing Pools</option>
-                <option value="camping">Camping</option>
-                <option value="farms">Farms</option>
-                <option value="arctic">Arctic</option>
-                <option value="domes">Domes</option>
-                <option value="boats">Boats</option>
-            </select>
-            <div class="invalid-feedback">Please select a category</div>
-        </div>
-        <div class="mb-3">
-            <label for="title" class="form-label">Title:</label>
-            <input name="listing[title]" placeholder="Add a catchy name" class="form-control" required>
-            <div class="valid-feedback">Title looks good!</div>
+                    <!-- Title Field -->
+                    <div class="mb-4">
+                        <label for="title" class="form-label fw-semibold">Title</label>
+                        <input name="listing[title]" placeholder="Add a catchy name" class="form-control py-2" required>
+                        <div class="valid-feedback text-success mt-1">Title looks good!</div>
+                    </div>
 
-        </div> 
-        <div class="mb-3">
-            <label for="description" class="form-label">Description:</label>
-            <textarea name="listing[description]" placeholder="" class="form-control"
-            required></textarea>
-            <div class="invalid-feedback">Description should be valid</div>
+                    <!-- Description Field -->
+                    <div class="mb-4">
+                        <label for="description" class="form-label fw-semibold">Description</label>
+                        <textarea name="listing[description]" placeholder="Describe your property..." class="form-control py-2" rows="3" required></textarea>
+                        <div class="invalid-feedback text-danger mt-1">Please provide a valid description</div>
+                    </div>
 
-        </div>    
-       
-        <div class="mb-3">
-            <label for="image" class="form-label">Upload Image:</label>
-            <input name="image" placeholder="enter url" class="form-control" type="file" required>
-            
-        </div>
-        <div class="row">
-            <div class="mb-3 col-md-4">
-            <label for="price" class="form-label">Price:</label>
-            <input name="listing[price]" placeholder="1200"  class="form-control" required>
-            <div class="invalid-feedback">Price should be valid</div>
+                    <!-- Image Upload Field -->
+                    <div class="mb-4">
+                        <label for="image" class="form-label fw-semibold">Upload Image</label>
+                        <input name="image" class="form-control py-2" type="file" required>
+                        <small class="text-muted">Upload high-quality images of your property</small>
+                    </div>
 
+                    <!-- Price & Country Row -->
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-6">
+                            <label for="price" class="form-label fw-semibold">Price</label>
+                            <div class="input-group">
+                                <span class="input-group-text">$</span>
+                                <input name="listing[price]" placeholder="1200" class="form-control py-2" required>
+                            </div>
+                            <div class="invalid-feedback text-danger mt-1">Please provide a valid price</div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="country" class="form-label fw-semibold">Country</label>
+                            <input name="listing[country]" placeholder="India" class="form-control py-2" required>
+                            <div class="invalid-feedback text-danger mt-1">Please provide a valid country</div>
+                        </div>
+                    </div>
+
+                    <!-- Location Field -->
+                    <div class="mb-4">
+                        <label for="location" class="form-label fw-semibold">Location</label>
+                        <input name="listing[location]" placeholder="Jaipur, Rajasthan" class="form-control py-2" required>
+                        <div class="invalid-feedback text-danger mt-1">Please provide a valid location</div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="d-grid">
+                        <button class="btn btn-primary btn-lg fw-semibold py-2">Create Listing</button>
+                    </div>
+                </form>
             </div>
-         <div class="mb-3 col-md-8">
-            <label for="country" class="form-label">Country:</label>
-            <input name="listing[country]" placeholder="India" class="form-control" required>
-             <div class="invalid-feedback">Country name should be valid</div>
-
-         </div>
-
         </div>
-        
-        <div class="mb-3">
-            <label for="location" class="form-label">Location:</label>
-            <input name="listing[location]" placeholder="Jaipur, Rajasthan" class="form-control" required>
-            <div class="invalid-feedback">Location should be valid</div>
-
-        </div>
-        
-        <button class="btn btn-dark add-btn">Add</button>
-        <br>
-        <br>
-    </form>
     </div>
 </div>
