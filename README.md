@@ -17,7 +17,7 @@ Cloudinary (for image uploads)
 OpenCage + Thunderforest APIs (for location data)  
 Multer (for handling file uploads)  
 dotenv  
-csv-parser (if you're using batch uploads)
+csv-parser 
 
 ---
 
