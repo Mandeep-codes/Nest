@@ -59,7 +59,6 @@ Start the server:
 
 ---
 
-**📄 License:**  
-MIT
+
 
 
